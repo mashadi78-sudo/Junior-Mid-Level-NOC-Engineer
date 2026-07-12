@@ -67,7 +67,7 @@ Banyak teknisi mengira jika internet tersambung, berarti kabel LAN 100% normal. 
 ### 2. TAHAP DEMI TAHAP PRAKTIK (Langkah Mandiri Siswa)
 1.  **Langkah Awal:** Siswa memotong kabel UTP Cat6, mengupas kulit pelindung luar sepanjang 2 cm, lalu menyusun urutan pin standar internasional **T568B**: *Putih Oranye (1), Oranye (2), Putih Hijau (3), Biru (4), Putih Biru (5), Hijau (6), Putih Cokelat (7), Cokelat (8)*.
 2.  **Langkah Inti:** Masukkan kabel ke konektor RJ45 dengan memastikan setiap ujung tembaga sudah mentok di ujung konektor, lalu jepit menggunakan tang *crimping* hingga berbunyi "klik" dan pin besi mengunci sempurna. Hubungkan kabel tersebut ke port Switch *Manageable*.
-3.  **Langkah Verifikasi (Uji Sistem):** Buka terminal CLI Switch (Cisco/MikroTik) yang terhubung. Ketik perintah `/interface ethernet monitor-traffic` atau `show interface counter error`. Lakukan transfer file besar atau *speedtest*. Amati apakah angka pada baris `CRC Error` atau `FCS Error` tetap bernilai `0`. Jika angkanya melonjak naik, kabel wajib dipotong dan di-*crimping* ulang.
+3.  **Langkah Verifikasi (Uji Sistem):** Buka terminal CLI Switch (Cisco/MikroTik) yang terhubung. Ketik perintah `/interface ethernet monitor-traffic` or `show interface counter error`. Lakukan transfer file besar atau *speedtest*. Amati apakah angka pada baris `CRC Error` atau `FCS Error` tetap bernilai `0`. Jika angkanya melonjak naik, kabel wajib dipotong dan di-*crimping* ulang.
 
 ---
 
@@ -81,3 +81,20 @@ Banyak teknisi mengira jika internet tersambung, berarti kabel LAN 100% normal. 
 - [ ] Menghafal dan mampu menyusun urutan kabel standar T568B dengan rapi tanpa melihat catatan.
 - [ ] Memahami korelasi antara pin fisik TX/RX (pin 1,2,3,6) dengan gejala ketidakseimbangan kecepatan *download/upload* (*unbalanced traffic*).
 - [ ] Mampu mendeteksi kerusakan kabel LAN lokal secara digital dengan membaca data statistik `CRC Error` dan `Rx Drop` pada CLI Switch.
+
+---
+---
+
+## 🛠️ SKILL-05: Karakteristik Serat Optik, Teknologi SFP, & Redaman
+*   **Kategori:** Infrastruktur Fisik Optik & Telemetri Perangkat Pusat
+*   **Estimasi Waktu Kuasai:** 2 Hari
+*   **Alat Kerja (Tools):** Modul SFP (Single Mode & Multi Mode), Patch Cord FO (LC/SC), Optical Power Meter (OPM), Built-in DOM via CLI RouterOS/Cisco.
+
+### 1. APA YANG HARUS DIPAHAMI? (Kedalaman Materi)
+Kabel serat optik (*Fiber Optic*) mengirimkan data menggunakan denyut cahaya laser, bukan listrik. Di ujung kabel, cahaya ini dipancarkan dan diterima oleh modul transceiver kecil bernama **SFP (Small Form-factor Pluggable)**. 
+
+Banyak staf NOC pemula terjebak mengira jika status SFP tertulis `Link Up`, berarti jaringan aman. Padahal, laser optik sangat sensitif dan memiliki batas toleransi kekuatan sinyal yang ketat. NOC wajib memahami tiga parameter kritis berikut:
+*   **Kecocokan Jenis SFP:** SFP *Single Mode* (SM) menggunakan laser panjang gelombang 1310nm/1550nm untuk jarak jauh (km). SFP *Multi Mode* (MM) menggunakan laser 850nm untuk jarak pendek (dalam gedung). Jika jenis SFP di Sisi A dan Sisi B tidak cocok, data tidak akan bisa lewat.
+*   **Membaca Data DOM (Digital Optical Monitoring):** Ini adalah fitur di dalam router/switch untuk mengintip kekuatan laser tanpa mencabut kabel. Parameter utamanya adalah:
+    *   **Tx Power (Transmit):** Kekuatan cahaya yang ditembakkan keluar oleh SFP kita.
+    *   **Rx Power (Receive):** Kekuatan cahaya dari lawan yang diterima oleh SFP kita.
